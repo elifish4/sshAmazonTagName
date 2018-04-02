@@ -44,11 +44,26 @@ Screenshot:
 
 
 # CsshAmazonTagName
+
+Description
+
+Clusrer ssh directly into servers by amazon tag name instead using IP/DNS.
+
+
+Configuration
+Copy the searchAmazon2 code into the end of ~/.bashrc file.
+
+
+
 * requirement install cssh / cluster-ssh
 
-searchAmazon2() {
+```searchAmazon2() {
         aws ec2 describe-instances --filters "Name=tag:Name,Values=$*" --output text --query 'Reservations[].Instances[].[PrivateIpAddress]' > /tmp/aws.txt
         cssh `cat /tmp/aws.txt | grep -v None`
 
 }
-alias cssa=searchAmazon2
+alias cssa=searchAmazon2```
+
+Usage:
+```eli@eli-Latitude-E7470:/$ cssa Kafka-Broker*```  (You can use asterisk (*) wildcard to do the query more globaly)
+
