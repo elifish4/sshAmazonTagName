@@ -40,3 +40,15 @@ Usage:
 
 Screenshot:
 ![Screenshot](screenshot.png)
+
+
+
+# CsshAmazonTagName
+* requirement install cssh / cluster-ssh
+
+searchAmazon2() {
+        aws ec2 describe-instances --filters "Name=tag:Name,Values=$*" --output text --query 'Reservations[].Instances[].[PrivateIpAddress]' > /tmp/aws.txt
+        cssh `cat /tmp/aws.txt | grep -v None`
+
+}
+alias cssa=searchAmazon2
