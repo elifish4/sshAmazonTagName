@@ -9,7 +9,8 @@ Configuration
 Copy the searchAmazon code into the end of ~/.bashrc file.
 
 
-````searchAmazon() {
+````
+searchAmazon() {
         aws ec2 describe-instances --filters "Name=tag:Name,Values=$*" --output text --query 'Reservations[].Instances[].[PrivateIpAddress,Tags[?Key==`Name`].Value[]]' | sed 's/None$/None\n/' | sed '$!N;s/\n/ /' | sort -k2 -V > /tmp/aws.txt
         prompt="Please select an instance to SSH: "
         mapfile -t < /tmp/aws.txt options
